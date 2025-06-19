@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocalização</title>
+</head>
+<body>
+    <h1>Solicitar Geolocalização</h1>
+    <button id="getLocation">Obter Localização</button>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById("getLocation").onclick = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("output").innerHTML = "Geolocalização não é suportada por este navegador.";
+            }
+        };
+
+        function showPosition(position) {
+            const output = `Latitude: ${position.coords.latitude}<br>Longitude: ${position.coords.longitude}`;
+            document.getElementById("output").innerHTML = output;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("output").innerHTML = "Usuário negou a solicitação de Geolocalização.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("output").innerHTML = "A localização não está disponível.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("output").innerHTML = "A solicitação de Geolocalização expirou.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("output").innerHTML = "Um erro desconhecido ocorreu.";
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
